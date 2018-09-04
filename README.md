@@ -1,5 +1,5 @@
 # object-tracker-color-based-using-openCV
-A project tracking green-object movement in videos/webcam, showing the moving direction in real-time.
+A project tracking green-object movement in videos/webcam, showing the moving direction in real-time. 
 (The code comments using here is chinese)
 
 
