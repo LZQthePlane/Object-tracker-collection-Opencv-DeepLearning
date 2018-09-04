@@ -8,14 +8,15 @@ import os
 
 
 video_path = os.path.dirname(os.path.abspath(__file__))
-max_buffer = 32  # 所跟踪对象在视频流中保留的帧数
+max_buffer = 16  # 所跟踪对象在视频流中保留的帧数
 # 追踪的颜色上下限
 green_low = (29, 100, 100)
 green_up = (64, 255, 255)
-points = deque(maxlen=max_buffer)  # 跟随点的最大数量，初始值仍是0
+# 跟随点的最大数量（小尾巴的点个数），初始值仍是0
+points = deque(maxlen=max_buffer)
 
 
-def obj_track_func(frame):
+def get_contours(frame):
     blurred = cv.GaussianBlur(frame, (11, 11), 0)  # 高斯滤波,减少高斯噪声
     hsv = cv.cvtColor(blurred, cv.COLOR_BGR2HSV)  # 转为HSV格式
     de_background = cv.inRange(hsv, green_low, green_up)  # 去除背景，低于green_low和高于green_up的值均变为0
@@ -23,16 +24,20 @@ def obj_track_func(frame):
     mask = cv.dilate(erode, None, iterations=2)
     contours = cv.findContours(mask.copy(), cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE)  # 获取目标轮廓
     contours = contours[0] if imutils.is_cv2() else contours[1]  # 针对不同cv版本，取不同的索引以得到值
+    return contours
 
-    if len(contours) > 0:
-        c = max(contours, key=cv.contourArea)  # 找到最大的轮廓
-        m = cv.moments(c)  # 图像矩
-        center = (int(m['m10'] / m['m00']), int(m['m01'] / m['m00']))  # 获取轮廓图像的质心，基于面积
-        ((x, y), r) = cv.minEnclosingCircle(c)  # 轮廓的最小包络圆及其中心坐标和半径
-        if r > 10:
-            cv.circle(frame, (int(x), int(y)), int(r), (0, 255, 255), thickness=2)  # 物体的轮廓
-            points.appendleft(center)  # 更新所追踪目标质心的集合，注意是从集合左侧添加
 
+def append_center_pts(contours, frame):
+    c = max(contours, key=cv.contourArea)  # 找到最大的轮廓
+    m = cv.moments(c)  # 图像矩
+    center = (int(m['m10'] / m['m00']), int(m['m01'] / m['m00']))  # 获取轮廓图像的质心，基于面积
+    ((x, y), r) = cv.minEnclosingCircle(c)  # 轮廓的最小包络圆及其中心坐标和半径
+    if r > 10:
+        cv.circle(frame, (int(x), int(y)), int(r), (0, 255, 255), thickness=2)  # 物体的轮廓
+        points.appendleft(center)  # 更新所追踪目标质心的集合，注意是从集合左侧添加
+
+
+def direction_show(contours, frame):
     dx, dy = 0, 0  # 坐标变化值
     direction = ''  # 方向提示文字
     for i in range(1, len(points)):
@@ -57,11 +62,24 @@ def obj_track_func(frame):
         if len(contours) > 0:
             thickness = int(np.sqrt(max_buffer / float(i + 1)) * 2.5)
             cv.line(frame, points[i - 1], points[i], (0, 0, 255), thickness)
+    return direction, dx, dy
+
+
+def obj_track_func(frame):
+    # 获取所有与目标颜色一致的objects的轮廓
+    contours = get_contours(frame)
+
+    if len(contours) > 0:
+        # 获取目标object的轮廓并显示，并找到连续16帧的目标质心位置
+        append_center_pts(contours, frame)
+
+    # 显示质心的移动方向及偏移情况， 画跟随线
+    direction, dx, dy = direction_show(contours, frame)
 
     # 添加左上角的移动方向文字，以及左下角的坐标变化文字
-    cv.putText(frame, direction, (10, 30), cv.FONT_HERSHEY_SIMPLEX, 0.65, (0, 0, 255), 3)
-    cv.putText(frame, "dx: {}, dy: {}".format(dx, dy), (10, frame.shape[0] - 10), cv.FONT_HERSHEY_SIMPLEX, 0.35,
-               (0, 0, 255), 1)
+    cv.putText(frame, direction, (10, 50), cv.FONT_HERSHEY_SIMPLEX, 2.0, (0, 0, 255), 3)
+    cv.putText(frame, "dx: {}, dy: {}".format(dx, dy), (10, frame.shape[0] - 10), cv.FONT_HERSHEY_SIMPLEX, 1.25,
+               (0, 0, 255), 2)
     cv.imshow("Green object tracker", frame)
     return frame
 
@@ -73,7 +91,7 @@ def track_with_cam():
         frame = vs.read()  # 获取当前帧
         if frame is None:
             break
-        frame = imutils.resize(frame, height=1000, width=800)  # 缩小frame大小可以加快FPS
+        frame = imutils.resize(frame, height=800, width=1000)  # 缩小frame大小可以加快FPS
         obj_track_func(frame)
         if cv.waitKey(1) & 0xFF == ord("q"):  # 退出键
             break
