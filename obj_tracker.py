@@ -1,5 +1,6 @@
 from collections import deque  # 用法与list相似，而list自带的append和pop方法（尾部插入和删除）速度慢
 from imutils.video import VideoStream
+from imutils.video import FPS
 import numpy as np
 import cv2 as cv
 import imutils
@@ -87,6 +88,7 @@ def obj_track_func(frame):
 def track_with_cam():
     vs = VideoStream(src=0).start()  # VideoStream以线程方式处理相机帧，效率更高
     time.sleep(1.0)  # 让摄像头或视频预热
+    fps = FPS().start()
     while True:
         frame = vs.read()  # 获取当前帧
         if frame is None:
@@ -95,6 +97,10 @@ def track_with_cam():
         obj_track_func(frame)
         if cv.waitKey(1) & 0xFF == ord("q"):  # 退出键
             break
+        fps.update()
+    fps.stop()
+    print('Elapsed time: {0:.2f}'.format(fps.elapsed()))  # webcam运行的时间
+    print('Approx. FPS: {0:.2f}'.format(fps.fps()))  # 每秒帧数
     vs.stop()
     cv.destroyAllWindows()
 
