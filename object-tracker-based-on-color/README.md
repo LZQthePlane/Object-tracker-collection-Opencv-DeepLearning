@@ -15,5 +15,5 @@ A simple video to test video-mode recorded by myself.
 
 
 ## ***Result***
-![result]()
+![result](https://github.com/LZQthePlane/Object-tracker-with-opencv/blob/master/object-tracker-based-on-color/test_gif.gif)
 
