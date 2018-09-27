@@ -1,5 +1,5 @@
 # Faces-centroid-tracker-counter
-A project tracking and counting faces in real time, a paramount to build a **Person-Counter**. 
+A project tracking and counting faces in real time, a paramount to build a ***Person-Counter***. 
 (The code comments using here is chinese)
 
 -------------------------------------------------
