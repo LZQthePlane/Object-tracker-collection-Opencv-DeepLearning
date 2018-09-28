@@ -1,4 +1,4 @@
-# Object-tracker-collection-with-openCV
+# Object-tracker-collection-Opencv-DeepLearning
 Collection of object-tracker projects of hot topics, with opencv and deeplearning.   
 (The code comments using here is chinese)
 
