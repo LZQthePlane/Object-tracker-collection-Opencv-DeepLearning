@@ -19,7 +19,7 @@ OpenCV includes eight separate object tracking implementations that you can use 
 8. ***GOTURN Tracker***: The only deep learning-based object detector included in OpenCV. It requires additional model files to run (will not be covered in this post). My initial experiments showed it was a bit of a pain to use even though it reportedly handles viewing changes well (my initial experiments didn’t confirm this though). I’ll try to cover it in a future post, but in the meantime, take a look at Satya’s writeup. (minimum OpenCV 3.2.0)   
 
 
-Suggestion from ***Adrian Rosebrock*** is to:
+Selecting suggestion from ***Adrian Rosebrock*** is to:
    - Use **CSRT** when you need **higher accuracy** and can tolerate slower FPS throughput;   
    - Use **KCF** when you need **faster FPS** throughput but can handle slightly lower object tracking accuracy;   
    - Use **MOSSE** when you need **pure speed**;
