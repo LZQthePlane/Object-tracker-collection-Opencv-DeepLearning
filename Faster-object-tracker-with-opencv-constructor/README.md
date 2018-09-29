@@ -32,10 +32,11 @@ So you can test all 8 algorithms constructed by opencv.
 ### - OpenCV-contrib (same version with opencv)
 If you get error as following: "AttributeError: module ‘cv2.cv2’ has no attribute ‘TrackerCSRT_create’", it's may because your opencv version is offcial while some functions are changed and moved to their **opencv_contrib module** for some reasons.   
 
-You can install it just by run `pip install opencv-contrib-python` in pip command or Anaconda command,    
+You can install it just by run `pip install opencv-contrib-python` in pip command or Anaconda command      
 **Make sure the version is same with opencv you installed**.   
 
-If it still doesn't work or you have problems when installing the same version, try that: **uninstall opencv --> install opencv-contrib --> install opencv again**.
+If it still doesn't work or you have problems when installing the same version, try this:   
+**uninstall opencv --> install opencv-contrib --> install opencv again**.
 
 --------------------------------------------------
 ## ***Result***
