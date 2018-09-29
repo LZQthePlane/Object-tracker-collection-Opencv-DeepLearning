@@ -4,7 +4,8 @@ Apply detection only once and then track it in every subsequent frame, leading t
 
 -------------------------------------------------
 ## ***Features***
-To track object in video-stream or in real-time, we usually run our detector on each frame, but it takes much **computing resouces** and potentially lead to **slower FPS**.    
+To track object in video-stream or in real-time, we usually run our detector on each frame, but it takes much **computing resouces** and potentially lead to **slower FPS**.  
+
 Instead, the algorithms provided by opencv **apply object detection only once and then have the object tracker be able to handle every subsequent frame**, leading to a **faster, more efficient** object tracking pipeline.   
 
 OpenCV includes eight separate object tracking implementations that you can use in your own computer vision applications.
@@ -16,6 +17,7 @@ OpenCV includes eight separate object tracking implementations that you can use 
 6. ***TLD Tracker***: I’m not sure if there is a problem with the OpenCV implementation of the TLD tracker or the actual algorithm itself, but the TLD tracker was incredibly prone to false-positives. I do not recommend using this OpenCV object tracker. (minimum OpenCV 3.0.0)
 7. ***MOSSE Tracker***: Very, very fast. Not as accurate as CSRT or KCF but a good choice if you need pure speed. (minimum OpenCV 3.4.1)
 8. ***GOTURN Tracker***: The only deep learning-based object detector included in OpenCV. It requires additional model files to run (will not be covered in this post). My initial experiments showed it was a bit of a pain to use even though it reportedly handles viewing changes well (my initial experiments didn’t confirm this though). I’ll try to cover it in a future post, but in the meantime, take a look at Satya’s writeup. (minimum OpenCV 3.2.0)   
+
 
 Suggestion from ***Adrian Rosebrock*** is to:
    - Use **CSRT** when you need **higher accuracy** and can tolerate slower FPS throughput;   
@@ -37,5 +39,5 @@ If it still doesn't work or you have problems when installing the same version, 
 
 --------------------------------------------------
 ## ***Result***
-![result](https://github.com/LZQthePlane/Object-tracker-collection-Opencv-DeepLearning/blob/master/Faces-centroid-tracker-counter/test_out/example.gif)
+![result](https://github.com/LZQthePlane/Object-tracker-collection-Opencv-DeepLearning/blob/master/Faster-object-tracker-with-opencv-constructor/test_out/example.gif)
 
