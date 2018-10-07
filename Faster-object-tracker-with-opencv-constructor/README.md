@@ -26,7 +26,7 @@ Selecting suggestion from ***Adrian Rosebrock*** is to:
 
 -------------------------------------------------
 ## ***Preparetion***
-### - OpenCV minimum 3.4.1
+### - OpenCV 3.4.1 and above
 So you can test all 8 algorithms constructed by opencv.
 
 ### - OpenCV-contrib (same version with opencv)
