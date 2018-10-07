@@ -25,7 +25,9 @@ This script definites several *tracking functions* which is important for runnin
 A detaching programm just to explain a complicate code block.
 
 ### —ResNetSSD
-Storing the *.prototxt* and *.caffemodel* files which are necessary for face detection.
+Storing the *.prototxt* and *.caffemodel* files which are necessary for face detection.   
+   - .prototxt file specifies the architecture of the neural network – how the different layers are arranged etc.
+   - .caffemodel file stores the weights of the trained model. 
 
 --------------------------------------------------
 ## ***Result***
