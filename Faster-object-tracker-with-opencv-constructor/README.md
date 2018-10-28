@@ -25,7 +25,7 @@ Selecting suggestion from ***Adrian Rosebrock*** is to:
    - Use **MOSSE** when you need **pure speed**;
 
 -------------------------------------------------
-## ***Preparetion***
+## ***Requirements***
 ### - OpenCV 3.4.1 and above
 So you can test all 8 algorithms constructed by opencv.
 
