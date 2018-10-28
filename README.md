@@ -5,8 +5,9 @@ Collection of object-tracker projects of hot topics, with opencv and deep learni
 ----------------------------------------------------
 ## requirements
 - ***python3***    
-- ***opencv*** (version 3.4 or above is better):  `pip install opencv-python`   
+- ***opencv***  (version 3.4 or above is better):  `pip install opencv-python`   
 - ***imutils***:  `pip install imutils`   
+- ***opencv-contrib***: (for *Faster-object-tracker-with-opencv-constructor*, [see installation here](https://github.com/LZQthePlane/Object-tracker-collection-Opencv-DeepLearning/blob/master/Faster-object-tracker-with-opencv-constructor/README.md))
 - ***scipy***   
 
 ----------------------------------------------------
