@@ -3,6 +3,12 @@ Collection of object-tracker projects of hot topics, with opencv and deep learni
 (The code comments using here is chinese)
 
 ----------------------------------------------------
+## requirements
+- ***opencv*** (version 3.4 and above is better):  `pip install opencv-python`   
+- ***imutils***:  `pip install imutils`   
+- ***scipy***   
+
+----------------------------------------------------
 ## object-tracker-based-on-color
 The implemetation of object-movemnt-tracking based on color (green in this example).
 
