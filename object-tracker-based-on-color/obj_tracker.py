@@ -86,22 +86,36 @@ def obj_track_func(frame):
 
 
 def track_with_cam():
-    vs = VideoStream(src=0).start()  # VideoStream以线程方式处理相机帧，效率更高
+    vs = cv.VideoCapture(0)  # VideoStream以线程方式处理相机帧，效率更高
     time.sleep(1.0)  # 让摄像头或视频预热
     fps = FPS().start()
+
+    width = int(vs.get(cv.CAP_PROP_FRAME_WIDTH))
+    height = int(vs.get(cv.CAP_PROP_FRAME_HEIGHT))
+    out_fps = 20
+    fourcc = cv.VideoWriter_fourcc(*'mp4v')  # 视频编码格式
+    writer = cv.VideoWriter()
+    out_path = video_path + os.sep + 'cam_out.mp4'
+    writer.open(out_path, fourcc, out_fps, (width, height), True)
+
     while True:
-        frame = vs.read()  # 获取当前帧
-        if frame is None:
-            break
-        frame = imutils.resize(frame, height=800, width=1000)  # 缩小frame大小可以加快FPS
-        obj_track_func(frame)
+        _, frame = vs.read()  # 获取当前帧
+        # if frame is None:
+        #     break
+        # frame = imutils.resize(frame, height=800, width=1000)  # 缩小frame大小可以加快FPS
+        frame = obj_track_func(frame)
+
+        fps.update()
+        fps.stop()
+        writer.write(frame)
+
         if cv.waitKey(1) & 0xFF == ord("q"):  # 退出键
             break
-        fps.update()
-    fps.stop()
+
     print('Elapsed time: {0:.2f}'.format(fps.elapsed()))  # webcam运行的时间
     print('Approx. FPS: {0:.2f}'.format(fps.fps()))  # 每秒帧数
-    vs.stop()
+    writer.release()
+    vs.release()
     cv.destroyAllWindows()
 
 
